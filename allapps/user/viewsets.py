@@ -1,11 +1,10 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
-
+from allapps.abstract.viewsets import AbstractViewSet
 from allapps.user.serializers import UserSerializer
 from allapps.user.models import User
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(AbstractViewSet):
     """A ViewSet for listing or retrieving users."""
     http_method_names = ('patch', 'get')
     permission_classes = (IsAuthenticated,)

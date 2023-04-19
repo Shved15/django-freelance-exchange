@@ -52,6 +52,11 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True)
 
+    offers_liked = models.ManyToManyField(
+        "allapps_offer.Offer",
+        related_name="liked_by"
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -64,3 +69,15 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     def name(self):
         # Returns the user's full name, concatenates the first_name and last_name fields
         return f"{self.first_name} {self.last_name}"
+
+    def like(self, offer):
+        """Like `offer` if it hasn't been done yet."""
+        return self.offers_liked.add(offer)
+
+    def remove_like(self, offer):
+        """Remove a like from a `offer`"""
+        return self.offers_liked.remove(offer)
+
+    def has_liked(self, offer):
+        """Return True if the user has liked a `offer`; else False."""
+        return self.offers_liked.filter(pk=offer.pk).exists()

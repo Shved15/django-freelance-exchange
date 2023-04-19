@@ -10,6 +10,22 @@ from allapps.user.serializers import UserSerializer
 class OfferSerializer(AbstractSerializer):
     """The serializer for the Offer model."""
     author = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
+    liked = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
+
+    def get_liked(self, instance):
+        """Check if the authenticated user has liked the `instance`.
+        Return True if the user has liked the instance, False otherwise."""
+        request = self.context.get('request', None)
+
+        if request is None or request.user.is_anonymous:
+            return False
+
+        return request.user.has_liked(instance)
+
+    def get_likes_count(self, instance):
+        """Return the amount users who have liked the `instance`."""
+        return instance.liked_by.count()
 
     def validate_author(self, value):
         """Checks that the offer author is the current user."""
@@ -35,5 +51,6 @@ class OfferSerializer(AbstractSerializer):
     class Meta:
         model = Offer
         # List of all the fields that can be included in a request or a response
-        fields = ['id', 'author', 'body', 'edited', 'created', 'updated']
+        fields = ['id', 'author', 'body', 'edited',
+                  'liked', 'likes_count', 'created', 'updated']
         read_only_fields = ["edited"]

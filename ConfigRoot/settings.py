@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'allapps',
     'allapps.user',
     'allapps.auth',
+    'allapps.offer',
 ]
 
 MIDDLEWARE = [

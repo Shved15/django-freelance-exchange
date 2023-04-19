@@ -1,6 +1,6 @@
 from django.db import models
 
-from allapps.abstract.models import AbstractModel, AbstractManager
+from allapps.abstract.models import AbstractManager, AbstractModel
 
 
 class OfferManager(AbstractManager):

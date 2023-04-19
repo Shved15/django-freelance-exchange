@@ -1,10 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
 
-from allapps.abstract.models import AbstractModel, AbstractManager
+from allapps.abstract.models import AbstractManager, AbstractModel
 
 
-# UserManager model,  so we can have methods to create a user and a superuser
+# UserManager model, so we can have methods to create a user and a superuser
 class UserManager(BaseUserManager, AbstractManager):
     def create_user(self, username, email, password=None, **kwargs):
         """Create and return a `User` with an email, phone number, username and password."""

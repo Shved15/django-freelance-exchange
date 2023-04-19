@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from allapps.user.serializers import UserSerializer
 from allapps.user.models import User
+from allapps.user.serializers import UserSerializer
 
 
 class RegisterSerializer(UserSerializer):

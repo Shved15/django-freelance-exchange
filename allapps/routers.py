@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from allapps.auth.viewsets import LoginViewSet, RegisterViewSet, RefreshViewSet
+from allapps.auth.viewsets import LoginViewSet, RefreshViewSet, RegisterViewSet
 from allapps.user.viewsets import UserViewSet
 
 router = routers.SimpleRouter()

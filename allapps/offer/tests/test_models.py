@@ -5,7 +5,7 @@ from allapps.offer.models import Offer
 
 
 @pytest.mark.django_db
-def test_create_post(user):
+def test_create_offer(user):
     offer = Offer.objects.create(author=user, body="Test Offer Body")
     assert offer.body == "Test Offer Body"
     assert offer.author == user

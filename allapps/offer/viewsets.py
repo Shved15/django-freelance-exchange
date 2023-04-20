@@ -1,7 +1,7 @@
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
 
 from allapps.abstract.viewsets import AbstractViewSet
 from allapps.offer.models import Offer
@@ -35,7 +35,7 @@ class OfferViewSet(AbstractViewSet):
     # This method adds a like from the current user to the specified instance of “Offer”.
     @action(methods=['post'], detail=True)
     def like(self, request, *args, **kwargs):
-        # Method will automatically return the concerned post using the ID passed to the URL request
+        # Method will automatically return the concerned post using the ID passed to the URL request.
         offer = self.get_object()
         user = self.request.user
 

@@ -9,7 +9,7 @@ from allapps.auth.serializers import LoginSerializer
 
 class LoginViewSet(ViewSet):
     """ViewSet for user authorization."""
-    # use LoginSerializer to serialize data, allow: access to any user and only the POST method
+    # use LoginSerializer to serialize data, allow: access to any user and only the POST method.
     serializer_class = LoginSerializer
     permission_classes = (AllowAny,)
     http_method_names = ['post']

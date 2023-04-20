@@ -1,6 +1,7 @@
-from rest_framework import routers
+from rest_framework_nested import routers
 
 from allapps.auth.viewsets import LoginViewSet, RefreshViewSet, RegisterViewSet
+from allapps.comment.viewsets import CommentViewSet
 from allapps.offer.viewsets import OfferViewSet
 from allapps.user.viewsets import UserViewSet
 
@@ -16,7 +17,10 @@ router.register(r'user', UserViewSet, basename='user')
 
 # Offer
 router.register(r'offer', OfferViewSet, basename='offer')
+offer_router = routers.NestedSimpleRouter(router, r'offer', lookup='offer')
+offer_router.register(r'comment', CommentViewSet, basename='offer-comment')
 
 urlpatterns = [
     *router.urls,
+    *offer_router.urls,
 ]

@@ -11,12 +11,18 @@ class Migration(migrations.Migration):
     dependencies = [
         ('allapps_offer', '0001_initial'),
         ('allapps_user', '0001_initial'),
+        ('allapps_comment', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='offer',
+            model_name='comment',
             name='author',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='allapps_user.user'),
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='offer',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='allapps_offer.offer'),
         ),
     ]

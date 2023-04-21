@@ -16,7 +16,7 @@ class LoginViewSet(ViewSet):
 
     def create(self, request, *args, **kwargs):
         """Creates a new login session."""
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data, context={'request': request})
 
         # check the data for validity, raise an exception on error
         try:

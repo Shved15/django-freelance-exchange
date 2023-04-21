@@ -17,11 +17,16 @@ class UserPermission(BasePermission):
 
             return bool(request.user and request.user.is_authenticated)
 
+        if view.basename in ['user']:
+            if request.method in SAFE_METHODS:
+                return True
+            return bool(request.user.id == obj.id)
+
         return False
 
     def has_permission(self, request, view):
         """Determines whether the user has the right to access the list of objects."""
-        if view.basename in ["offer", "offer-comment"]:
+        if view.basename in ["offer", "offer-comment", "user"]:
             if request.user.is_anonymous:
                 return request.method in SAFE_METHODS
 

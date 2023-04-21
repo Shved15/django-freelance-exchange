@@ -13,6 +13,7 @@ class OfferViewSet(AbstractViewSet):
     http_method_names = ('post', 'get', 'put', 'delete')
     permission_classes = (UserPermission,)
     serializer_class = OfferSerializer
+    filterset_fields = ["author__public_id"]
 
     def get_queryset(self):
         """Returns a QuerySet of all Offer objects."""
@@ -39,9 +40,9 @@ class OfferViewSet(AbstractViewSet):
         offer = self.get_object()
         user = self.request.user
 
-        user.like(offer)
+        user.like_offer(offer)
 
-        serializer = self.serializer_class(offer)
+        serializer = self.serializer_class(offer, context={'request': request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -51,8 +52,8 @@ class OfferViewSet(AbstractViewSet):
         offer = self.get_object()
         user = self.request.user
 
-        user.remove_like(offer)
+        user.remove_like_offer(offer)
 
-        serializer = self.serializer_class(offer)
+        serializer = self.serializer_class(offer, context={'request': request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)

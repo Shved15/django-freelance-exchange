@@ -13,6 +13,21 @@ class CommentSerializer(AbstractSerializer):
     # SlugRelatedField is used to convert objects to strings using the specified object attribute as value.
     author = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='public_id')
     offer = serializers.SlugRelatedField(queryset=Offer.objects.all(), slug_field='public_id')
+    liked = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
+
+    def get_liked(self, instance):
+        # The get_liked method returns a boolean indicating whether the user marked the comment as liked.
+        # If the request was not passed in the context or used by the user, not authenticated, returns False.
+        request = self.context.get('request', None)
+
+        if request is None or request.user.is_anonymous:
+            return False
+
+        return request.user.has_liked_comment(instance)
+
+    def get_likes_count(self, instance):
+        return instance.commented_by.count()
 
     def validate_author(self, value):
         """Checks that the current user, and the author of the comment match."""
@@ -48,5 +63,5 @@ class CommentSerializer(AbstractSerializer):
     class Meta:
         model = Comment
         # List of all the fields that can be included in a request or a response
-        fields = ['id', 'offer', 'author', 'body', 'edited', 'created', 'updated']
+        fields = ['id', 'offer', 'author', 'body', 'edited', 'liked', 'likes_count', 'created', 'updated']
         read_only_fields = ["edited"]

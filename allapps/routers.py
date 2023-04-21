@@ -17,10 +17,11 @@ router.register(r'user', UserViewSet, basename='user')
 
 # Offer
 router.register(r'offer', OfferViewSet, basename='offer')
-offer_router = routers.NestedSimpleRouter(router, r'offer', lookup='offer')
-offer_router.register(r'comment', CommentViewSet, basename='offer-comment')
+
+offers_router = routers.NestedSimpleRouter(router, r'offer', lookup='offer')
+offers_router.register(r'comment', CommentViewSet, basename='offer-comment')
 
 urlpatterns = [
     *router.urls,
-    *offer_router.urls,
+    *offers_router.urls,
 ]

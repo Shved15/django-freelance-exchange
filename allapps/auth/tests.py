@@ -9,7 +9,7 @@ class TestAuthenticationViewSet:
 
     def test_login(self, client, user):
         data = {
-            "username": user.email,
+            "username": user.username,
             "password": "test_password",
         }
         response = client.post(self.endpoint + 'login/', data)

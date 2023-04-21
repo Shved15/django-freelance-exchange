@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 
 from allapps.abstract.viewsets import AbstractViewSet
+from allapps.auth.permissions import UserPermission
 from allapps.user.models import User
 from allapps.user.serializers import UserSerializer
 
@@ -8,7 +9,7 @@ from allapps.user.serializers import UserSerializer
 class UserViewSet(AbstractViewSet):
     """A ViewSet for listing or retrieving users."""
     http_method_names = ('patch', 'get')
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, UserPermission)
     serializer_class = UserSerializer
 
     def get_queryset(self):

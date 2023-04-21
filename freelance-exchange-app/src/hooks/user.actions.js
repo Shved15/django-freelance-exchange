@@ -1,14 +1,16 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosService from "../helpers/axios";
+import axios from "axios";
 
 function useUserActions() {
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8000/api";
+  const baseURL = process.env.REACT_APP_API_URL;
 
   return {
     login,
     register,
     logout,
+    edit,
   };
 
   // Login the user
@@ -29,10 +31,35 @@ function useUserActions() {
     });
   }
 
+  // Edit the user
+  function edit(data, userId) {
+    return axiosService
+      .patch(`${baseURL}/user/${userId}/`, data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        // Registering the account in the store
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            access: getAccessToken(),
+            refresh: getRefreshToken(),
+            user: res.data,
+          })
+        );
+      });
+  }
+
   // Logout the user
   function logout() {
-    localStorage.removeItem("auth");
-    navigate("/login");
+    return axiosService
+      .post(`${baseURL}/auth/logout/`, { refresh: getRefreshToken() })
+      .then(() => {
+        localStorage.removeItem("auth");
+        navigate("/login");
+      });
   }
 }
 
@@ -70,4 +97,10 @@ function setUserData(data) {
   );
 }
 
-export { useUserActions, getUser, getAccessToken, getRefreshToken };
+export {
+  useUserActions,
+  getUser,
+  getAccessToken,
+  getRefreshToken,
+  setUserData,
+};

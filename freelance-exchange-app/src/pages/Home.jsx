@@ -1,7 +1,19 @@
 import React from "react";
+import Layout from "../components/Layout";
+import { Row, Col, Image } from "react-bootstrap";
+import useSWR from "swr";
+import { fetcher } from "../helpers/axios";
 import { getUser } from "../hooks/user.actions";
+import { Offer } from "../components/offers";
+import CreateOffer from "../components/offers/CreateOffer";
+import ProfileCard from "../components/profile/ProfileCard";
 
 function Home() {
+  const offers = useSWR("/offer/", fetcher, {
+    refreshInterval: 20000,
+  });
+  const profiles = useSWR("/user/?limit=5", fetcher);
+
   const user = getUser();
 
   if (!user) {
@@ -9,10 +21,40 @@ function Home() {
   }
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <p>Welcome!</p>
-    </div>
+    <Layout>
+      <Row className="justify-content-evenly">
+        <Col sm={7}>
+          <Row className="border rounded  align-items-center">
+            <Col className="flex-shrink-1">
+              <Image
+                src={user.avatar}
+                roundedCircle
+                width={52}
+                height={52}
+                className="my-2"
+              />
+            </Col>
+            <Col sm={10} className="flex-grow-1">
+              <CreateOffer refresh={offers.mutate} />
+            </Col>
+          </Row>
+          <Row className="my-4">
+            {offers.data?.results.map((offer, index) => (
+              <Offer key={index} offer={offer} refresh={offers.mutate} />
+            ))}
+          </Row>
+        </Col>
+        <Col sm={3} className="border rounded py-4 h-50">
+          <h4 className="font-weight-bold text-center">Suggested people</h4>
+          <div className="d-flex flex-column">
+            {profiles.data &&
+              profiles.data.results.map((profile, index) => (
+                <ProfileCard key={index} user={profile} />
+              ))}
+          </div>
+        </Col>
+      </Row>
+    </Layout>
   );
 }
 

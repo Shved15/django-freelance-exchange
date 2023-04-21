@@ -48,11 +48,13 @@ function RegistrationForm() {
         noValidate
         validated={validated}
         onSubmit={handleSubmit}
+        data-testid="register-form"
       >
         <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>
           <Form.Control
             value={form.first_name}
+            data-testid="first-name-field"
             onChange={(e) => setForm({ ...form, first_name: e.target.value })}
             required
             type="text"
@@ -66,6 +68,7 @@ function RegistrationForm() {
           <Form.Label>Last name</Form.Label>
           <Form.Control
             value={form.last_name}
+            data-testid="last-name-field"
             onChange={(e) => setForm({ ...form, last_name: e.target.value })}
             required
             type="text"
@@ -79,6 +82,7 @@ function RegistrationForm() {
           <Form.Label>Username</Form.Label>
           <Form.Control
             value={form.username}
+            data-testid="username-field"
             onChange={(e) => setForm({ ...form, username: e.target.value })}
             required
             type="text"
@@ -92,6 +96,7 @@ function RegistrationForm() {
           <Form.Label>Email address</Form.Label>
           <Form.Control
             value={form.email}
+            data-testid="email-field"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             required
             type="email"
@@ -106,6 +111,7 @@ function RegistrationForm() {
           <Form.Label>Password</Form.Label>
           <Form.Control
             value={form.password}
+            data-testid="password-field"
             minLength="8"
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
@@ -121,6 +127,7 @@ function RegistrationForm() {
           <Form.Label>Bio</Form.Label>
           <Form.Control
             value={form.bio}
+            data-testid="bio-field"
             onChange={(e) => setForm({ ...form, bio: e.target.value })}
             as="textarea"
             rows={3}

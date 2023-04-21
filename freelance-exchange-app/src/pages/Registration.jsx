@@ -8,7 +8,7 @@ function Registration() {
       <div className="row">
         <div className="col-md-6 d-flex align-items-center">
           <div className="content text-center px-4">
-            <h1 className="text-primary">Welcome to the "My Art"!</h1>
+            <h1 className="text-primary">Welcome to the My Art!</h1>
             <p className="content">
             This is a new freelance exchange for dance educators and choreographers
             that will allow you to post proposals for choreography training online or in person.
@@ -27,3 +27,6 @@ function Registration() {
 }
 
 export default Registration;
+
+
+

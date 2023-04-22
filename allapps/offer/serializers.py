@@ -25,7 +25,7 @@ class OfferSerializer(AbstractSerializer):
         if request is None or request.user.is_anonymous:
             return False
 
-        return request.user.has_liked(instance)
+        return request.user.has_liked_offer(instance)
 
     def get_likes_count(self, instance):
         """Return the amount users who have liked the `instance`."""
@@ -51,6 +51,7 @@ class OfferSerializer(AbstractSerializer):
         rep = super().to_representation(instance)
         author = User.objects.get_object_by_public_id(rep["author"])
         rep["author"] = UserSerializer(author).data
+        return rep
 
     class Meta:
         model = Offer

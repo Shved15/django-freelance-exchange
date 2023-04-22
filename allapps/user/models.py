@@ -55,7 +55,7 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     bio = models.TextField(null=True)
-    avatar = models.ImageField(null=True)
+    avatar = models.ImageField(null=True, blank=True, upload_to=user_directory_path)
 
     offers_liked = models.ManyToManyField('allapps_offer.Offer', related_name='liked_by')
     comments_liked = models.ManyToManyField('allapps_comment.Comment', related_name='commented_by')

@@ -1,4 +1,4 @@
-from rest_framework import filters, viewsets
+from rest_framework import viewsets
 
 
 class AbstractViewSet(viewsets.ModelViewSet):
